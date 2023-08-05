@@ -25,17 +25,17 @@ set width to 15%, control button width
 .container {
     width:auto;
     display:block;
-    padding-left:25%;
-    padding-right:25%;
+    padding-left:20%;
+    padding-right:20%;
 }
 
 .button-35 {
   align-items: center;
-  background-color: #fff;
+  background-color: #FFF;
   border-radius: 12px;
   box-shadow: transparent 0 0 0 3px,rgba(195, 155, 211, .5) 0 6px 20px;
   box-sizing: border-box;
-  color: #454545;
+  color: #FFF;
   cursor: pointer;
   display: inline-flex;
   flex: 1 1 auto;
@@ -69,4 +69,12 @@ set width to 15%, control button width
     width:30px;
     vertical-align: middle;
 
+}
+
+.facebook{
+  background-color: #3B5998;
+}
+
+.google{
+  background-color: #dd4b39;
 }
