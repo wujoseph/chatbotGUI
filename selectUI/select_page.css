@@ -1,0 +1,42 @@
+.title {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 0%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+.male-panel {
+    position: absolute;
+    width: 50%;
+    height: 90%;
+    border: 1px #cccccc dashed;
+    text-align: center;
+    top: 10%;
+    left: 0;
+}
+
+.female-panel {
+    position: absolute;
+    width: 50%;
+    height: 90%;
+    border: 1px #cccccc dashed;
+    text-align: center;
+    top: 10%;
+    left: 50%;
+}
+
+.btn {
+    width: 160px;
+    height: 64px;
+    background-image: linear-gradient(180deg, #C39BD3 0%, #578aef 100%, #8f41e9 100%);
+    border-radius: 8px;
+    border: none;
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    top: 80%;
+}
