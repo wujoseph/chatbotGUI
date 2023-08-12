@@ -17,17 +17,22 @@ set width to 15%, control button width
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     box-shadow: transparent 0 0 0 3px,rgba(195, 195, 195, .5) 0 6px 20px;
+    flex-direction: column;
+    display:flex;
   }
+
+
 
 .description {
     text-align: center;
     width: 100%;
-    font-size: 3rem;
+    font-size: 3.5rem;
     color: #454545;
-    margin-top:2rem;
-    margin-bottom:2rem;
     font-family: Inter,sans-serif;
     font-weight: 700;
+    margin-top: 10%;
+    margin-bottom:10%;
+
 }
 
 .container {
@@ -35,6 +40,8 @@ set width to 15%, control button width
     display:block;
     padding-left:20%;
     padding-right:20%;
+    flex-grow: 1;
+    display:flex
 }
 
 .button-35 {
@@ -46,7 +53,7 @@ set width to 15%, control button width
   color: #FFF;
   cursor: pointer;
   display: inline-flex;
-  flex: 1 1 auto;
+  flex: 1;
   font-family: Inter,sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
@@ -64,6 +71,7 @@ set width to 15%, control button width
   -webkit-user-select: none;
   touch-action: manipulation;
   width: 100%;
+  height:50%;
   margin-top:1rem;
   margin-bottom:1rem;
   font-family: sans-serif;
