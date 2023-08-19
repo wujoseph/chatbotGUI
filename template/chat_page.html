@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="chat_page_css.css" />
   <title>AdminLTE 3 | Dashboard 3</title>
 </head>
 
@@ -141,4 +142,9 @@ document.querySelector('.btn.btn-primary').addEventListener('click', function() 
     messageInput.value = '';
   }
 });
+
+function toggleMenu() {
+  var content = document.querySelector('.dropSetting-content');
+  content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+}
 </script>
