@@ -1,0 +1,121 @@
+.center {
+    background-color: #fff;
+    border-color: #454545;
+    border-radius: 10%;
+    border-width: 0.00005em;
+    border-style: none;
+    margin: auto;
+    width: 50%;
+    height: 55%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: transparent 0 0 0 3px, rgba(195, 195, 195, .5) 0 6px 20px;
+}
+
+.description {
+    text-align: center;
+    width: 100%;
+    font-size: 3rem;
+    color: #454545;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+}
+
+.container1 {
+    position: absolute;
+    width: 50%;
+    height: 70%;
+    border: none;
+    text-align: center;
+    top: 30%;
+    left: 0;
+  display: inline-block;
+}
+
+.container2 {
+    position: absolute;
+    width: 50%;
+    height: 70%;
+    border: none;
+    text-align: center;
+    top: 30%;
+    left: 50%;
+}
+
+.container1 .btn1 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 200%;
+    text-align: center;
+    border: none;
+    border-radius: 0 0 0 10%;
+    padding: 20px;
+    color: blue;
+    background-color: white;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  overflow: hidden;
+}
+
+.container1 .btn1::before {
+    content: "";
+  position: absolute;
+  top: 0;
+  left: 25%;
+  width: 100%;
+  border-top: 3px solid red;
+  height: 0;
+}
+
+.btn1:hover {
+    color: #fff;
+    background-color: blue;
+}
+
+.btn2 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 200%;
+    text-align: center;
+    border: none;
+    border-radius: 0 0 10% 0;
+    color: crimson;
+    background-color: white;
+    cursor: pointer;
+  overflow: hidden;
+}
+
+.container2 .btn2::before {
+    content: "";
+  position: absolute;
+  top: 0;
+  right: 25%;
+  width: 100%;
+  border-top: 3px solid red;
+  height: 0;
+}
+
+.container2 .btn2::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+  bottom:10%;
+    left: 0;
+    height: 80%;
+    width: 100%;
+  border-left: 3px solid red;
+}
+
+.btn2:hover {
+    color: #fff;
+    background-color: crimson;
+}

@@ -28,6 +28,10 @@ def guest_page():
 def chat_page():
 	return render_template("chat_page.html",**locals())
 
+@app.route('/character')
+def character_select_page():
+	return render_template("character_select_page.html",**locals())
+
 
 
 
