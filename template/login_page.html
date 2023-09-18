@@ -1,41 +1,64 @@
 <!-- HTML !-->
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="login_page_css.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .fa-facebook {
-            color: #fff;
-            margin-right: 10px;
-        }
+	<link rel="stylesheet" type="text/css" href="login_page_css.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		.fa-facebook {
+			color: #fff;
+			margin-right: 10px;
+		}
 
-        .fa-google {
-            color: #fff;
-            margin-right: 10px;
-        }
+		.fa-google {
+			color: #fff;
+			margin-right: 10px;
+		}
 
-    </style>
+	</style>
 </head>
 <body class="loginpage">
 
-    <div class="center">
-        <div class="container">
-            <div class="description">Login</div>
-        </div>
-        <div class="container">
-            
-            <button class="button-35 google" role="button">
-                <a class="fa fa-google"></a>
-                Continue with Google
-                
-            </button>
-        </div>
-        <div class="container">
-            <button class="button-35 facebook" role="button">
-                <a class="fa fa-facebook"></a>            
-                Continue with Facebook
-            </button>
-        </div>
-    </div>
+	<div class="center">
+		<div class="container">
+			<div class="description">Login</div>
+		</div>
+		<div class="container">
+			
+			<button class="button-35 google" role="button">
+				<a class="fa fa-google"></a>
+				Continue with Google
+				
+			</button>
+		</div>
+		<div class="container">
+			<button class="button-35 facebook" role="button">
+				<a class="fa fa-facebook"></a>            
+				Continue with Facebook
+			</button>
+		</div>
+	</div>
 </body>
+<script>
+	document.querySelector('button.button-35.google').addEventListener('click', function(){
+		var form_data = new FormData();
+		form_data.append('email','mygmail@gmail.com');
+		form_data.append('key','mykey');
+		var xhr = new XMLHttpRequest();  
+		xhr.responseType = 'json';
+		xhr.open("post", "/google_api");
+		xhr.send(form_data);
+		xhr.onreadystatechange = function() { 
+			if (xhr.readyState == 4 && xhr.status == 200){
+				var json_data = xhr.response;
+				//console.log(json_data);
+				//console.log(json_data.login_result)
+				if(json_data.login_result === "True"){
+					console.log("login success");
+					document.cookie = "apikey=mykey";
+					window.location.href = '/character'
+				}
+			}
+		}
+	});
+</script>
 </html>

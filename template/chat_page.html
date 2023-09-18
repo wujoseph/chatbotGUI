@@ -118,28 +118,100 @@
 </html>
 
 <script>
+//load chat history
+
+//get character arg from url
+update_history()
+function update_history(){
+  var urlParams = new URLSearchParams(window.location.search);
+  var character = urlParams.get('character');
+  console.log(character);
+
+  var xhr = new XMLHttpRequest();  
+  xhr.responseType = 'json';
+  xhr.open("get", "/chat_history?character=" + character);
+  xhr.send()
+  xhr.onreadystatechange = function() { 
+    if (xhr.readyState == 4 && xhr.status == 200){
+      var json_data = xhr.response;
+      json_data = JSON.parse(json_data)
+      json_data.forEach(function(value){
+
+        console.log(value[0])
+        addCommentMe(value[0])
+        console.log(value[1])
+        addCommentAI(value[1])
+        
+      });
+    }
+  }
+}
+
+function addCommentMe(input){
+  var newDiv = document.createElement('div');
+  newDiv.className = 'mb-3';
+  var newInput = document.createElement('input');
+  newInput.type = 'text';
+  newInput.id = 'disabledTextInput';
+  newInput.className = 'form-control';
+  newInput.placeholder = 'Disabled input';
+  newInput.disabled = true;
+  newInput.value = input;
+  newDiv.appendChild(newInput);
+
+  var messagesDiv = document.querySelector('.messages');
+  messagesDiv.appendChild(newDiv); 
+}
+
+function addCommentAI(input){
+  var newDiv = document.createElement('div');
+  newDiv.className = 'mb-3';
+  var newInput = document.createElement('input');
+  newInput.type = 'text';
+  newInput.id = 'disabledTextInput';
+  newInput.className = 'form-control';
+  newInput.placeholder = 'Disabled input';
+  newInput.disabled = true;
+  newInput.value = input;
+  //change AI color to red
+  newInput.style.backgroundColor = '#e74c3c';
+  newDiv.appendChild(newInput);
+  var messagesDiv = document.querySelector('.messages');
+  messagesDiv.appendChild(newDiv); 
+}
+
+
+
 document.querySelector('.btn.btn-primary').addEventListener('click', function() {
   var messageInput = document.querySelector('input[name="message"]');
   var messageText = messageInput.value;
   if (messageText.trim() !== '') {
-    var newDiv = document.createElement('div');
-    newDiv.className = 'mb-3';
-    var newInput = document.createElement('input');
-    newInput.type = 'text';
-    newInput.id = 'disabledTextInput';
-    newInput.className = 'form-control';
-    newInput.placeholder = 'Disabled input';
-    newInput.disabled = true;
-    newInput.value = messageText;
-    newDiv.appendChild(newInput);
-    var messagesDiv = document.querySelector('.messages');
-    // 如果存在前一条消息，则删除
-    if (messagesDiv.childNodes.length > 0) {
-      messagesDiv.removeChild(messagesDiv.lastChild);
-    }
-    messagesDiv.appendChild(newDiv);
-    // 清空输入框
+    addCommentMe(messageText);
+    var form_data = new FormData();
+    form_data.append('chat',messageText);
+    var urlParams = new URLSearchParams(window.location.search);
+    var character = urlParams.get('character');
+    form_data.append('character',character);
+    var xhr = new XMLHttpRequest();  
+    xhr.responseType = 'text';
+    xhr.open("post", "/new_chat");
+    xhr.send(form_data);
     messageInput.value = '';
+
+
+    //wait for server response
+    addCommentAI('...');
+    xhr.onreadystatechange = function() { 
+    if (xhr.readyState == 4 && xhr.status == 200){
+      var json_data = xhr.response;
+      console.log(json_data)
+      if(json_data === 'OK'){
+        var messagesDiv = document.querySelector('.messages');
+        messagesDiv.innerHTML = '';
+        update_history();
+      }
+    }
+  }
   }
 });
 

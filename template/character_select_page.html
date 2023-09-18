@@ -11,11 +11,18 @@
     <div class="center">
         <div class="description">select AI's voice</div>
         <div class="container1">
-            <button class="btn1" id="js-male">Male</button>
+            <button class="btn1" id="js-male">酸民</button>
         </div>
         <div class="container2">
-            <button class="btn2" id="js-female">Female</button>
+            <button class="btn2" id="js-female">心靈指導</button>
         </div>
     </div>
-
+    <script>
+        document.querySelector('button.btn1').addEventListener('click', function(){
+            window.location.href = '/chat?character=troll'
+        });
+        document.querySelector('button.btn2').addEventListener('click', function(){
+            window.location.href = '/chat?character=support'
+        });
+    </script>
 </body>

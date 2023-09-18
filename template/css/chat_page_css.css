@@ -186,8 +186,9 @@ html {
 
 .messages {
   position: absolute; /* 絕對定位將使元素相對於最近的相對定位的父元素定位 */
-  top: 80%; /* 將元素放置在底部80%的位置 */
+  top: 10%; /* 將元素放置在底部80%的位置 (edit to 10%)*/
   left: 23.5%; /* 水平居中的補充，使元素在左側有10%的空間 */
   width: 72%; /* 讓元素填滿70%的寬度 */
   text-align: center; /* 將文本水平居中 */
+  overflow-y:scroll;/* 設置可下拉*/
 }
