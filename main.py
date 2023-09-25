@@ -43,6 +43,14 @@ def chat_page():
 	print(f'chat_page apikey={apikey}, character={character}')
 	return render_template("chat_page.html",**locals())
 
+@app.route('/chat2')
+def chat_page2():
+	apikey = request.cookies.get('apikey')
+	character = request.args.get('character')
+	print(f'chat_page apikey={apikey}, character={character}')
+	return render_template("chat_page2.html",**locals())
+
+
 #need to load all the chat history
 @app.route('/chat_history')
 def chat_history():

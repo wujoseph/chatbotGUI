@@ -53,6 +53,8 @@ class learning_project_function:
         return False
     
     def chat_history(self,apikey, character):
+        if(apikey is None or character is None):
+            return ""
         sql_cmd = """
         select *
         from chathistory

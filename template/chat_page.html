@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="chat_page_css.css" />
+  <link rel="stylesheet" type="text/css" href="chat_page_css2.css" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
   <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
   <link rel="stylesheet" type="text/css" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0" />
   <link rel="stylesheet" type="text/css" href="https://adminlte.io/themes/v3/plugins/fontawesome-free/css/all.min.css" />
   
-  <title>AdminLTE 3 | Dashboard 3</title>
+  <title>Chat Page</title>
 </head>
 
-<body class="sidebar-mini" style="height: auto;">
-  <div class="wrapper">
+<body class="sidebar-mini" style=" overflow: hidden;">
+  <div class="wrapper" style="height: 100%;">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
-      <ul class="navbar-nav">
+       <ul class="navbar-nav">
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Home</a>
@@ -27,7 +27,7 @@
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Log in</a>
         </li>
-      </ul>
+      </ul> 
 
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -90,129 +90,186 @@
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
           </svg>
           <span class="text-with-icon">Settings</span></button>
+        <div class="dropSetting-content">
+          <a href="#">Option 1</a>
+          <a href="#">Option 2</a>
+          <a href="#">Option 3</a>
+        </div>
       </div>
 
     </aside>
 
-    <div class="content-wrapper" style="min-height: 1302.4px;">
+    <div class="content-wrapper">
 
       <div class="content">
-        <div class="messages">
-    <!-- 這裡會放置訊息 -->
-  </div>
+        <div class="messages"></div>
       </div>
-
+      <footer class="msg-footer">
+        <form action="#" method="post" autocomplete="off">
+          <div class="input-group">
+            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+            <span class="input-group-append">
+              <button type="button" class="btn btn-primary send-button">Send</button>
+            </span>
+          </div>
+        </form>
+      </footer>
     </div>
 </body>
-<footer class="main-footer">
-  <form action="#" method="post" autocomplete="off">
-  <div class="input-group">
-    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-    <span class="input-group-append">
-      <button type="button" class="btn btn-primary">Send</button>
-    </span>
-  </div>
-</form>
-</footer>
 
 </html>
 
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
+<script src="https://adminlte.io/themes/v3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+<script src="https://adminlte.io/themes/v3/plugins/chart.js/Chart.min.js"></script>
+<script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard3.js"></script>
+
 <script>
-//load chat history
+	update_history()
+	function update_history(){
+		var urlParams = new URLSearchParams(window.location.search);
+		var character = urlParams.get('character');
+		console.log(character);
 
-//get character arg from url
-update_history()
-function update_history(){
-  var urlParams = new URLSearchParams(window.location.search);
-  var character = urlParams.get('character');
-  console.log(character);
+		var xhr = new XMLHttpRequest();  
+		xhr.responseType = 'json';
+		xhr.open("get", "/chat_history?character=" + character);
+		xhr.send()
+		xhr.onreadystatechange = function() { 
+			if (xhr.readyState == 4 && xhr.status == 200){
+			var json_data = xhr.response;
+			json_data = JSON.parse(json_data)
+			json_data.forEach(function(value){
 
-  var xhr = new XMLHttpRequest();  
-  xhr.responseType = 'json';
-  xhr.open("get", "/chat_history?character=" + character);
-  xhr.send()
-  xhr.onreadystatechange = function() { 
-    if (xhr.readyState == 4 && xhr.status == 200){
-      var json_data = xhr.response;
-      json_data = JSON.parse(json_data)
-      json_data.forEach(function(value){
+				console.log(value[0])
+				addCommentMe(value[0])
+				console.log(value[1])
+				addCommentAI(value[1])					
+			});
+			}
+		}
+		autoScroll()
+	}
+  function addCommentMe(input){
+    var newDiv = document.createElement('div');
+    newDiv.className = 'mb-3';
+    var newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.id = 'disabledTextInput';
+    newInput.className = 'form-control';
+    newInput.placeholder = 'Disabled input';
+    newInput.disabled = true;
+    newInput.value = input;
+    newDiv.appendChild(newInput);
 
-        console.log(value[0])
-        addCommentMe(value[0])
-        console.log(value[1])
-        addCommentAI(value[1])
-        
-      });
-    }
+    var messagesDiv = document.querySelector('.messages');
+    messagesDiv.appendChild(newDiv); 
+		autoScroll()
   }
-}
 
-function addCommentMe(input){
-  var newDiv = document.createElement('div');
-  newDiv.className = 'mb-3';
-  var newInput = document.createElement('input');
-  newInput.type = 'text';
-  newInput.id = 'disabledTextInput';
-  newInput.className = 'form-control';
-  newInput.placeholder = 'Disabled input';
-  newInput.disabled = true;
-  newInput.value = input;
-  newDiv.appendChild(newInput);
+  function addCommentAI(input){
+    var newDiv = document.createElement('div');
+    newDiv.className = 'mb-3';
+    var newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.id = 'disabledTextInput';
+    newInput.className = 'form-control';
+    newInput.placeholder = 'Disabled input';
+    newInput.disabled = true;
+    newInput.value = input;
+    //change AI color to red
+    newInput.style.backgroundColor = '#e74c3c';
+    newDiv.appendChild(newInput);
+    var messagesDiv = document.querySelector('.messages');
+    messagesDiv.appendChild(newDiv);
+		autoScroll()
+  }
 
-  var messagesDiv = document.querySelector('.messages');
-  messagesDiv.appendChild(newDiv); 
-}
+  function sendMessage() {
+    var messageInput = document.querySelector('input[name="message"]');
+    var messageText = messageInput.value;
+    if (messageText.trim() !== '') {
+      addCommentMe(messageText)
+      messageInput.value = '';
 
-function addCommentAI(input){
-  var newDiv = document.createElement('div');
-  newDiv.className = 'mb-3';
-  var newInput = document.createElement('input');
-  newInput.type = 'text';
-  newInput.id = 'disabledTextInput';
-  newInput.className = 'form-control';
-  newInput.placeholder = 'Disabled input';
-  newInput.disabled = true;
-  newInput.value = input;
-  //change AI color to red
-  newInput.style.backgroundColor = '#e74c3c';
-  newDiv.appendChild(newInput);
-  var messagesDiv = document.querySelector('.messages');
-  messagesDiv.appendChild(newDiv); 
-}
-
-
-
-document.querySelector('.btn.btn-primary').addEventListener('click', function() {
-  var messageInput = document.querySelector('input[name="message"]');
-  var messageText = messageInput.value;
-  if (messageText.trim() !== '') {
-    addCommentMe(messageText);
-    var form_data = new FormData();
-    form_data.append('chat',messageText);
-    var urlParams = new URLSearchParams(window.location.search);
-    var character = urlParams.get('character');
-    form_data.append('character',character);
-    var xhr = new XMLHttpRequest();  
-    xhr.responseType = 'text';
-    xhr.open("post", "/new_chat");
-    xhr.send(form_data);
-    messageInput.value = '';
+      //send request to server, add new message
+      var form_data = new FormData();
+      form_data.append('chat',messageText);
+      var urlParams = new URLSearchParams(window.location.search);
+      var character = urlParams.get('character');
+      form_data.append('character',character);
+      var xhr = new XMLHttpRequest();  
+      xhr.responseType = 'text';
+      xhr.open("post", "/new_chat");
+      xhr.send(form_data);
+      messageInput.value = '';
 
 
-    //wait for server response
-    addCommentAI('...');
-    xhr.onreadystatechange = function() { 
-    if (xhr.readyState == 4 && xhr.status == 200){
-      var json_data = xhr.response;
-      console.log(json_data)
-      if(json_data === 'OK'){
-        var messagesDiv = document.querySelector('.messages');
-        messagesDiv.innerHTML = '';
-        update_history();
+      //wait for server response
+      //create '...' message first
+      //update the AI model response after receive response
+      addCommentAI('...');
+      xhr.onreadystatechange = function() { 
+        if (xhr.readyState == 4 && xhr.status == 200){
+          var json_data = xhr.response;
+          console.log(json_data)
+          if(json_data === 'OK'){
+            var messagesDiv = document.querySelector('.messages');
+            messagesDiv.innerHTML = '';
+            update_history();
+          }
+        }
       }
     }
   }
-  }
-});
+  
+  document.querySelector('.send-button.btn-primary').addEventListener('click', sendMessage);
+  
+  document.querySelector('input[name="message"]').addEventListener('keypress', function(e) {
+    // 檢查按鍵是否為 Enter
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();  // 避免 form 提交或其他不必要的行為
+      sendMessage();
+    }
+  });
+
+function toggleMenu() {
+  var content = document.querySelector('.dropSetting-content');
+  content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+}
+
+function setFooterWidth() {
+  // 獲取<aside>的寬度
+  var asideWidth = document.querySelector('.main-sidebar').offsetWidth;
+
+  // 獲取視窗的寬度
+  var windowWidth = window.innerWidth;
+
+  // 計算剩餘的寬度
+  var remainingWidth = windowWidth - asideWidth;
+
+  // 設置這個寬度給.msg-footer
+  document.querySelector('.msg-footer').style.width = remainingWidth + 'px';
+}
+
+function autoScroll(){
+	//將聊天紀錄自動滑至最底部
+	var messageBody = document.querySelector('.content');
+	messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+}
+
+window.onload = setFooterWidth;
+// 當視窗寬度改變時，重新設置.msg-footer的寬度
+window.onresize = setFooterWidth;
+
+// 獲取navbar的高度
+var navbarHeight = $('.main-header.navbar').height();
+// 使用JavaScript計算新的高度
+var newHeight = "calc(100vh - " + navbarHeight + "px)";
+// 使用jQuery設置新的高度
+$('.content-wrapper').css('height', newHeight);
+
 
 </script>

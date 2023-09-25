@@ -160,7 +160,176 @@ html {
   vertical-align: middle;
 }
 
+.text-with-icon {body {
+  margin: 0;
+  font-family: "Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.main-header .navbar-nav .nav-item {
+  margin: 0;
+}
+
+.dropdown, .dropleft, .dropright, .dropup {
+  position: relative;
+}
+
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
+.navbar-nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.ml-auto, .mx-auto {
+  margin-left: auto!important;
+}
+
+.navbar-nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.navbar-expand .navbar-nav {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+.ml-auto, .mx-auto {
+  margin-left: auto!important;
+}
+
+dl, ol, ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+.navbar-white {
+  background-color: #fff;
+  color: #1f2d3d;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.dropSetting {
+position: absolute; /* 讓Settings部分絕對定位 */
+bottom: 0; /* 把Settings部分固定在底部 */
+width: 100%; /* 讓Settings部分佔滿整個側邊欄的寬度 */
+text-align: center; /* 將文字對齊設置在左側 */
+display: inline-block;
+border-top: 1px solid #D0D4DB;
+padding: 5px;
+}
+
+.dropSettingbtn {
+background-color: #343A40;
+color: white;
+padding: 10px;
+width: 100%;
+font-size: 0.9em;
+border: 1px solid #D0D4DB;
+border-radius: 5px 5px 5px 5px;
+cursor: pointer;
+}
+
+.dropSettingbtn svg {
+vertical-align: middle;
+}
+
 .text-with-icon {
+position: relative;
+top: 1.5px; /* 微調這個數值，直到找到完美的對齊位置 */
+}
+
+.dropSetting-content {
+display: none;
+position: absolute; /* 絶對定位 */
+bottom: 100%; /* 使內容向上展開 */
+left: 50%; /* 水平居中 */
+transform: translateX(-50%); /* 微調水平位置 */
+width: calc(100% - 20px); /* 設置寬度為 100% 減去兩側的 padding */
+background-color: #f9f9f9;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.dropSetting-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+.content-wrapper {
+
+display: flex;
+flex-direction: column;
+}
+
+
+.content {
+/*目前無法將對話置於底部*/
+/*display: flex;*/
+justify-content: flex-end; /* 將消息置於底部 */
+
+flex-direction: column; /* 設為column，所以內部元件是垂直堆疊的 */  
+height:100%;
+overflow-y: scroll;  
+}
+
+
+.msg-footer {
+/* 不需要定位，因為它已經是在.content-wrapper的底部了 */
+width: 80%;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 10px;
+}
+
+
   position: relative;
   top: 1.5px; /* 微調這個數值，直到找到完美的對齊位置 */
 }
