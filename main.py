@@ -59,7 +59,12 @@ def chat_history():
 	print(f'chat_page apikey={apikey}, character={character}')
 	# notice db store data in single quote, and js should use double quote
     # so it should be transform here
-	return jsonify(function.chat_history(apikey, character).replace("'",'"'))
+
+	try:
+		response = function.chat_history(apikey, character).replace("'",'"')
+	except AttributeError:# if there is no chat history, then replace function will cause this error
+		response = ""
+	return jsonify(response)
 
 
 #need to load all the chat history
