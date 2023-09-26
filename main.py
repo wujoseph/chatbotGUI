@@ -1,36 +1,93 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
-from flask import request
-from flask import jsonify
-from flask import redirect
-from flask import render_template
+from flask import Flask, jsonify, redirect, render_template, session, url_for, request
 from bin.db_function import learning_project_function
 import os.path
+import logging
+import json
+from flask_oauthlib.client import OAuth
+
+#logging.basicConfig(filename="../serverlog/log.txt", level=logging.INFO)
+#logging.info("Debug logging test...")
+
+
+#read key from other file
+path = os.path.join(os.path.dirname(__file__) ,'../key.json')
+path = os.path.abspath(path)
+
+with open(path,'r') as f:
+	data = json.load(f)
+	mysql_account = data["mysql_account"]
+	mysql_password = data["mysql_password"]
+	consumer_key = data["consumer_key"]
+	consumer_secret = data["consumer_secret"]
+	flask_secret_key = data["flask_secret_key"]
 
 app = Flask(__name__,template_folder='template',static_url_path='', 
-            static_folder='template/css')
+			static_folder='template/css')
+app.secret_key = flask_secret_key
 
-path = os.path.join(os.path.dirname(__file__) ,'../password.txt')
-path = os.path.abspath(path)
-print(path)
-with open(path,'r') as f:
-	mysql_account = next(f).replace('\n','')
-	mysql_password = next(f).replace('\n','')
-print(mysql_account, mysql_password)
+#MySQL database setting
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{mysql_account}:{mysql_password}@localhost:3306/database"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
+#Google Oauth API setting
+oauth = OAuth(app)
+
+google = oauth.remote_app(
+	'google',
+	consumer_key=consumer_key,
+	consumer_secret=consumer_secret,
+	request_token_params={
+		'scope': 'email',
+	},
+	base_url='https://www.googleapis.com/oauth2/v1/',
+	request_token_url=None,
+	access_token_method='POST',
+	access_token_url='https://accounts.google.com/o/oauth2/token',
+	authorize_url='https://accounts.google.com/o/oauth2/auth',
+)
+
 function = learning_project_function(db)
 
 @app.route('/')
 def index():
-    #return function.test_user()
-    return redirect('/login')
+	#return function.test_user()
+	return redirect('/login')
 
 @app.route('/login')
 def login_page():
 	return render_template("login_page.html",**locals())
+
+@app.route('/login/google')
+def login_google():
+	return google.authorize(callback=url_for('authorized', _external=True))
+
+@app.route('/login/google/authorized')
+def authorized():
+	response = google.authorized_response()
+	if response is None or response.get('access_token') is None:
+		return 'Access denied: reason={0} error={1}'.format(
+			request.args['error_reason'],
+			request.args['error_description']
+		)
+
+	session['access_token'] = response['access_token']
+	user_info = google.get('userinfo')
+	
+	# 將用戶的信息存儲到session
+	session['user_info'] = user_info.data
+	print(user_info.data)
+	# return 'OK'
+	# 如果認證成功，重定向到chat_page
+	return redirect(url_for('character'))
+
+@google.tokengetter
+def get_google_oauth_token():
+	return session.get('access_token')
+
 
 @app.route('/guest')
 def guest_page():
@@ -58,7 +115,7 @@ def chat_history():
 	character = request.args.get('character')
 	print(f'chat_page apikey={apikey}, character={character}')
 	# notice db store data in single quote, and js should use double quote
-    # so it should be transform here
+	# so it should be transform here
 
 	try:
 		response = function.chat_history(apikey, character).replace("'",'"')
@@ -116,5 +173,5 @@ def google_api():
 	return '{"login_result": "' + str(function.check_google_api(key)) + '"}'
 	
 if __name__ == "__main__":
-    app.run(host='140.119.19.27', port=5000)
+	app.run(host='140.119.19.27', port=5000)
 
