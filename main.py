@@ -6,8 +6,11 @@ import logging
 import json
 from flask_oauthlib.client import OAuth
 
-#logging.basicConfig(filename="../serverlog/log.txt", level=logging.INFO)
-#logging.info("Debug logging test...")
+logging.basicConfig(filename="../serverlog/serverlog.log", 
+					filemode='a',
+					format='%(levelname)s - %(message)s',
+					level=logging.INFO)
+logging.info("START SERVER")
 
 
 #read key from other file
@@ -97,7 +100,7 @@ def guest_page():
 def chat_page():
 	apikey = request.cookies.get('apikey')
 	character = request.args.get('character')
-	print(f'chat_page apikey={apikey}, character={character}')
+	#print(f'chat_page apikey={apikey}, character={character}')
 	return render_template("chat_page.html",**locals())
 
 @app.route('/chat2')
@@ -113,7 +116,8 @@ def chat_page2():
 def chat_history():
 	apikey = request.cookies.get('apikey')
 	character = request.args.get('character')
-	print(f'chat_page apikey={apikey}, character={character}')
+	# print(f'chat_page apikey={apikey}, character={character}')
+
 	# notice db store data in single quote, and js should use double quote
 	# so it should be transform here
 
@@ -130,7 +134,8 @@ def new_chat():
 	chat = request.form.get('chat')
 	apikey = request.cookies.get('apikey')	
 	character = request.form.get('character')
-	print(f'new_chat apikey={apikey}, character={character}, new_chat={new_chat}')
+	#print(f'new_chat apikey={apikey}, character={character}, new_chat={new_chat}')
+	logging.info(f'new_chat apikey={apikey}, character={character}, new_chat={new_chat}')
 	function.new_chat(apikey, chat,character)
 	return "OK"
 
@@ -170,8 +175,8 @@ def google_api():
 	print(email,key)
 	#check value in database
 	
-	return '{"login_result": "' + str(function.check_google_api(key)) + '"}'
+	return jsonify({"login_result":str(function.check_google_api(key)), "email":email})
 	
 if __name__ == "__main__":
-	app.run(host='140.119.19.27', port=5000)
+	app.run(host='140.119.19.27', port=80)
 

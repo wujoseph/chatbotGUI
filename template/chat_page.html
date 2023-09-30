@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="chat_page_css.css" />
+  <link rel="stylesheet" type="text/css" href="setting_page_css.css" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
   <link rel="stylesheet" type="text/css" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
   <link rel="stylesheet" type="text/css" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css?v=3.2.0" />
@@ -13,26 +14,42 @@
 </head>
 
 <body class="sidebar-mini" style=" overflow: hidden;">
+  
+  <div class="popup-background">
+    <div class="center">
+      <div class="card-header">
+          <div class="card-tools">            
+              <button type="button" class="btn btn-tool" data-card-widget="remove" onclick="closeSetting()">X</button>
+          </div>
+      </div>
+      <div class="description">Setting</div>
+      <div class="container">
+          <div class="setting-group">
+              <label>Theme</label>
+              <select class="form-control">
+                  <option>Bright</option>
+                  <option>Dark</option>
+              </select>
+          </div>
+          <div class="setting-group">
+              <label>Language</label>
+              <select class="form-control">
+                  <option>English</option>
+                  <option>Chinese 中文</option>
+              </select>
+          </div>
+          <button class="button-25" role="button">Change character</button>
+          <button class="button-25 delete" role="button">Delete history</button>
+          <button class="button-25 log-out" role="button"> Log out</button>
+      </div>
+    </div>
+  </div>
+
   <div class="wrapper" style="height: 100%;">
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-
-       <ul class="navbar-nav">
-
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Log in</a>
-        </li>
-      </ul> 
-
-    </nav>
+    
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-      <span class="brand-text brand-link font-weight-light">New Chat</span>
+      <span class="brand-text brand-link font-weight-light">PersonaBot</span>
       <div class="sidebar">
         <div class="form-inline">
           <div class="input-group" data-widget="sidebar-search">
@@ -75,18 +92,9 @@
         </nav>
 
       </div>
-      <div class="dropSetting">
-        <button class="dropSettingbtn text-light" onclick="toggleMenu()">
-          <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
-          <span class="text-with-icon">Settings</span></button>
-        <div class="dropSetting-content">
-          <a href="#">Option 1</a>
-          <a href="#">Option 2</a>
-          <a href="#">Option 3</a>
-        </div>
+      <div class="dropSetting">        
+        <button class="dropSettingbtn text-light" onclick="openSetting()">
+          <span class="text-with-icon">Setting</span></button>
       </div>
 
     </aside>
@@ -154,6 +162,7 @@
     newInput.placeholder = 'Disabled input';
     newInput.disabled = true;
     newInput.value = input;
+    newInput.style.backgroundColor = '#C39BD3';
     newDiv.appendChild(newInput);
 
     var messagesDiv = document.querySelector('.messages');
@@ -171,8 +180,6 @@
     newInput.placeholder = 'Disabled input';
     newInput.disabled = true;
     newInput.value = input;
-    //change AI color to red
-    newInput.style.backgroundColor = '#e74c3c';
     newDiv.appendChild(newInput);
     var messagesDiv = document.querySelector('.messages');
     messagesDiv.appendChild(newDiv);
@@ -227,10 +234,18 @@
     }
   });
 
-function toggleMenu() {
-  var content = document.querySelector('.dropSetting-content');
-  content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+function openSetting() {
+  var popup = document.querySelector('.popup-background');
+  console.log('open')
+  popup.style.display="block";
 }
+
+function closeSetting() {
+  var popup = document.querySelector('.popup-background');
+  popup.style.display="none";
+}
+
+
 
 function setFooterWidth() {
   // 獲取<aside>的寬度

@@ -24,8 +24,8 @@ set width to 15%, control button width
     width: 100%;
     font-size: 48px;
     color: #454545;
-    margin-top:35px;
-    margin-bottom:30px;
+    margin-top:15px;
+    margin-bottom:15px;
     font-family: Inter,sans-serif;
     font-weight: 700;
 }
