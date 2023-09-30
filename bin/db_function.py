@@ -21,9 +21,9 @@ class learning_project_function:
             query_data = conn.execute(text(sql_cmd))
             st = ""
             for i in query_data:
-                print(i)
+                #print(i)
                 st += str(i)
-            print("---------select end----")
+            #print("---------select end----")
             return st
         
     def db_insert_test(self):
@@ -35,7 +35,7 @@ class learning_project_function:
         with self.db.engine.connect() as conn:
             conn.execute(text(sql_cmd))
             conn.commit()
-            print('---------insert end----')
+            #print('---------insert end----')
 
 
     def check_google_api(self,key):
@@ -65,8 +65,8 @@ class learning_project_function:
         with self.db.engine.connect() as conn:
             query_data = conn.execute(text(sql_cmd))
             for i in query_data:
-                print(i)
-                print(i[2])
+                #print(i)
+                #print(i[2])
                 return i[2]
                 # here the data is in single quote
     
@@ -78,8 +78,8 @@ class learning_project_function:
 
     def new_chat(self, apikey, chat, character):
         now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print(now_time)
-        print(apikey, character)
+        #print(now_time)
+        #print(apikey, character)
         # chat_his = '"' + self.chat_history(apikey, character) + '"'
         chat_his = self.chat_history(apikey, character).replace("'", '"')
         chat_his_json = json.loads(chat_his)
@@ -92,7 +92,7 @@ class learning_project_function:
         sql_cmd = """
         insert into chathistory
         """ + f"values('{now_time}', '{apikey}', '{chat_his}', '{character}');"
-        print(sql_cmd)
+        #print(sql_cmd)
         with self.db.engine.connect() as conn:
             conn.execute(text(sql_cmd))
             conn.commit()

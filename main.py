@@ -1,9 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, redirect, render_template, session, url_for, request
+from flask import Flask, jsonify, redirect, render_template, session, url_for, request, send_file
 from bin.db_function import learning_project_function
 import os.path
 import logging
 import json
+import requests
 from flask_oauthlib.client import OAuth
 
 logging.basicConfig(filename="../serverlog/serverlog.log", 
@@ -82,7 +83,7 @@ def authorized():
 	
 	# 將用戶的信息存儲到session
 	session['user_info'] = user_info.data
-	print(user_info.data)
+	#print(user_info.data)
 	# return 'OK'
 	# 如果認證成功，重定向到chat_page
 	return redirect(url_for('character'))
@@ -107,7 +108,7 @@ def chat_page():
 def chat_page2():
 	apikey = request.cookies.get('apikey')
 	character = request.args.get('character')
-	print(f'chat_page apikey={apikey}, character={character}')
+	#print(f'chat_page apikey={apikey}, character={character}')
 	return render_template("chat_page2.html",**locals())
 
 
@@ -142,7 +143,7 @@ def new_chat():
 @app.route('/character')
 def character_select_page():
 	apikey = request.cookies.get('apikey')
-	print(f'character_page apikey={apikey}')
+	#print(f'character_page apikey={apikey}')
 	return render_template("character_select_page.html",**locals())
 
 @app.route('/setting')
@@ -172,11 +173,33 @@ def google_api():
 	#username = request.form.get('username')
 	email = request.form.get('email')
 	key = request.form.get('key')
-	print(email,key)
+	#print(email,key)
 	#check value in database
 	
 	return jsonify({"login_result":str(function.check_google_api(key)), "email":email})
-	
+
+# call tts reference api
+@app.route('/generate_audio',methods =['POST'])
+def generate_audio():
+	text = request.form.get('text')
+	url = 'http://127.0.0.1:7860/run/predict/'
+	data = {"fn_index":0,"data":[text,"human","简体中文",1]}
+	x = requests.post(url, json = data)
+	file_name = 'OK'
+	try:
+		response = json.loads(x.text)
+		file_name = response["data"][1]["name"]
+	except:
+		logging.warning(f"error audio response:,{response}")
+	return file_name
+
+# return audio file(wav)
+@app.route('/audio')
+def audio():
+	filename = request.args.get('file')
+	#print(filename)
+	return send_file(filename)
+
 if __name__ == "__main__":
 	app.run(host='140.119.19.27', port=80)
 

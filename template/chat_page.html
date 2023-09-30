@@ -89,6 +89,11 @@
         <div class="messages"></div>
       </div>
       <footer class="msg-footer">
+        <!-- audio element for testing api -->
+        <audio controls autoplay id="audio">
+          <source src="" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio>
         <form action="#" method="post" autocomplete="off">
           <div class="input-group">
             <input type="text" name="message" placeholder="Type Message ..." class="form-control">
@@ -111,7 +116,7 @@
 <script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard3.js"></script>
 
 <script>
-	update_history()
+	update_history();
 	function update_history(){
 		var urlParams = new URLSearchParams(window.location.search);
 		var character = urlParams.get('character');
@@ -126,26 +131,28 @@
 			var json_data = xhr.response;
 			json_data = JSON.parse(json_data)
 			json_data.forEach(function(value){
-
-				console.log(value[0])
-				addCommentMe(value[0])
-				console.log(value[1])
-				addCommentAI(value[1])					
+        console.log(value[0])
+        addCommentMe(value[0])
+        console.log(value[1])
+        addCommentAI(value[1])		      		
 			});
-			}
-		}
-		autoScroll()
+      autoScroll();
+      //生成語音(依據最新對話)
+      generate_audio();
+			}      
+		}		
 	}
   function addCommentMe(input){
     var newDiv = document.createElement('div');
     newDiv.className = 'mb-3';
     var newInput = document.createElement('input');
     newInput.type = 'text';
-    newInput.id = 'disabledTextInput';
     newInput.className = 'form-control';
     newInput.placeholder = 'Disabled input';
     newInput.disabled = true;
     newInput.value = input;
+    //增加ref attribute, 使tts可以讀取文字
+    newInput.setAttribute('ref',input);
     newInput.style.backgroundColor = '#C39BD3';
     newDiv.appendChild(newInput);
 
@@ -159,11 +166,12 @@
     newDiv.className = 'mb-3';
     var newInput = document.createElement('input');
     newInput.type = 'text';
-    newInput.id = 'disabledTextInput';
     newInput.className = 'form-control';
     newInput.placeholder = 'Disabled input';
     newInput.disabled = true;
     newInput.value = input;
+    //增加ref attribute, 使tts可以讀取文字
+    newInput.setAttribute('ref',input);
     newDiv.appendChild(newInput);
     var messagesDiv = document.querySelector('.messages');
     messagesDiv.appendChild(newDiv);
@@ -228,8 +236,27 @@ function closeSetting() {
   var popup = document.querySelector('.popup-background');
   popup.style.display="none";
 }
-
-
+/*取得最新的對話紀錄
+只由update_history()呼叫
+*/
+function generate_audio(){
+  var latestreply = document.querySelector('.messages').lastChild.firstChild.getAttribute('ref');
+  var form_data = new FormData();
+  console.log(latestreply);
+  form_data.append('text',latestreply);
+  var xhr = new XMLHttpRequest();  
+  xhr.responseType = 'text';
+  xhr.open("post", "/generate_audio");
+  xhr.send(form_data);
+  xhr.onreadystatechange = function() { 
+    if (xhr.readyState == 4 && xhr.status == 200){
+        filename = xhr.response;
+        var audio = document.getElementById('audio');
+        audio.src = '/audio?file=' + filename
+        console.log(audio.src)      
+    }
+  }
+}
 
 function setFooterWidth() {
   // 獲取<aside>的寬度
@@ -261,6 +288,7 @@ var navbarHeight = $('.main-header.navbar').height();
 var newHeight = "calc(100vh - " + navbarHeight + "px)";
 // 使用jQuery設置新的高度
 $('.content-wrapper').css('height', newHeight);
+
 
 
 </script>
