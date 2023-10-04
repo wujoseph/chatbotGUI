@@ -87,6 +87,7 @@
       <div class="main-section">
         <div class="character-img">
             <!-- 這裡可以放置側邊欄的內容 -->
+            <image class="image-cover"></image>
         </div>
 
         <div class="content">
@@ -125,7 +126,7 @@
 	function update_history(){
 		var urlParams = new URLSearchParams(window.location.search);
 		var character = urlParams.get('character');
-		console.log(character);
+		//console.log(character);
 
 		var xhr = new XMLHttpRequest();  
 		xhr.responseType = 'json';
@@ -292,8 +293,16 @@ var navbarHeight = $('.main-header.navbar').height();
 // 使用JavaScript計算新的高度
 var newHeight = "calc(100vh - " + navbarHeight + "px)";
 // 使用jQuery設置新的高度
-//$('.content-wrapper').css('height', newHeight);
+$('.content-wrapper').css('height', newHeight);
 
-
+//設定不同角色圖片
+var urlParams = new URLSearchParams(window.location.search);
+var character = urlParams.get('character');
+var image = document.querySelector('.image-cover');
+if(character == 'support'){
+  image.src='https://cdn.discordapp.com/attachments/824652321736097852/1159038161167585330/image2.png'
+}else if(character == 'troll'){
+  image.src='https://cdn.discordapp.com/attachments/824652321736097852/1159041255657971782/image1.png'
+};
 
 </script>

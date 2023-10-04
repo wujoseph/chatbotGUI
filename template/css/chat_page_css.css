@@ -217,5 +217,9 @@ display: block;
 
 .message-form{
   flex: 1;
-  margin-right:10px;
+  margin:10px;
+}
+
+.image-cover{
+  object-fit: cover;
 }
