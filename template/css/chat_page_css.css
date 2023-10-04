@@ -142,30 +142,34 @@ display: block;
 }
 
 .content-wrapper {
-
-display: flex;
-flex-direction: column;
-}
-
-
-.content {
-/*目前無法將對話置於底部*/
-/*display: flex;*/
-justify-content: flex-end; /* 將消息置於底部 */
-
-flex-direction: column; /* 設為column，所以內部元件是垂直堆疊的 */  
-height:100%;
-overflow-y: scroll;  
-}
-
-
-.msg-footer {
-/* 不需要定位，因為它已經是在.content-wrapper的底部了 */
-width: 80%;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 10px;
-}
+  
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  }
+  
+  
+  .content {
+  /*目前無法將對話置於底部*/
+  /*display: flex;*/
+  flex:1;
+  justify-content: flex-end; /* 將消息置於底部 */
+  
+  flex-direction: column; /* 設為column，所以內部元件是垂直堆疊的 */  
+  max-height:85vh;
+  overflow-y: scroll;  
+  }
+  
+  
+  .msg-footer {
+  /* 不需要定位，因為它已經是在.content-wrapper的底部了 */
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  flex-direction: row;
+  display: flex;
+  }
 
 /*以下三個是setting popup*/
 .popup-background {
@@ -189,3 +193,29 @@ margin-bottom: 10px;
   font-weight: bolder;
 }
 
+.main-section {
+  flex: 1; /* 使主要區域佔據除footer外的所有空間 */
+  display: flex;
+  flex-direction: row; /* sidebar和content橫向排列 */
+}
+
+.sidebar-image {
+  flex: 1; 
+  background-color: #f4f4f4;
+}
+
+.main-section {
+  display: flex;
+  flex-direction: row;
+  flex: 1; /* 使其佔用除footer之外的所有空間 */
+}
+
+.character-img {
+  flex: 1; /* 平分左右空間 */
+  /* 根據需要添加其他樣式，如背景色或背景圖片 */
+}
+
+.message-form{
+  flex: 1;
+  margin-right:10px;
+}

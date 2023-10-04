@@ -84,9 +84,14 @@
     </aside>
 
     <div class="content-wrapper">
+      <div class="main-section">
+        <div class="character-img">
+            <!-- 這裡可以放置側邊欄的內容 -->
+        </div>
 
-      <div class="content">
-        <div class="messages"></div>
+        <div class="content">
+            <div class="messages"></div>
+        </div>
       </div>
       <footer class="msg-footer">
         <!-- audio element for testing api -->
@@ -94,7 +99,7 @@
           <source src="" type="audio/wav">
           Your browser does not support the audio element.
         </audio>
-        <form action="#" method="post" autocomplete="off">
+        <form class="message-form" action="#" method="post" autocomplete="off">
           <div class="input-group">
             <input type="text" name="message" placeholder="Type Message ..." class="form-control">
             <span class="input-group-append">
@@ -131,9 +136,9 @@
 			var json_data = xhr.response;
 			json_data = JSON.parse(json_data)
 			json_data.forEach(function(value){
-        console.log(value[0])
+        //console.log(value[0])
         addCommentMe(value[0])
-        console.log(value[1])
+        //console.log(value[1])
         addCommentAI(value[1])		      		
 			});
       autoScroll();
@@ -242,7 +247,7 @@ function closeSetting() {
 function generate_audio(){
   var latestreply = document.querySelector('.messages').lastChild.firstChild.getAttribute('ref');
   var form_data = new FormData();
-  console.log(latestreply);
+  //console.log(latestreply);
   form_data.append('text',latestreply);
   var xhr = new XMLHttpRequest();  
   xhr.responseType = 'text';
@@ -253,7 +258,7 @@ function generate_audio(){
         filename = xhr.response;
         var audio = document.getElementById('audio');
         audio.src = '/audio?file=' + filename
-        console.log(audio.src)      
+        //console.log(audio.src)      
     }
   }
 }
@@ -287,7 +292,7 @@ var navbarHeight = $('.main-header.navbar').height();
 // 使用JavaScript計算新的高度
 var newHeight = "calc(100vh - " + navbarHeight + "px)";
 // 使用jQuery設置新的高度
-$('.content-wrapper').css('height', newHeight);
+//$('.content-wrapper').css('height', newHeight);
 
 
 
