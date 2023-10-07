@@ -38,11 +38,11 @@ class learning_project_function:
             #print('---------insert end----')
 
 
-    def check_google_api(self,key):
+    def check_google_email(self,key):
         sql_cmd = """
         select *
         from user
-        where apikey='""" + key + "'"
+        where email='""" + key + "'"
 
         # sqlalchemy ver 2.0, need to use with statement, and text() function
         with self.db.engine.connect() as conn:
@@ -52,13 +52,13 @@ class learning_project_function:
                 return True # apikey is valid           
         return False
     
-    def chat_history(self,apikey, character):
-        if(apikey is None or character is None):
+    def chat_history(self,email, character):
+        if(email is None or character is None):
             return ""
         sql_cmd = """
         select *
         from chathistory
-        where apikey='""" + apikey + "' AND charac='" +  character +"' ORDER BY time DESC"
+        where email='""" + email + "' AND charac='" +  character +"' ORDER BY time DESC"
         # using 'charac' column in sql table, due to reserved word
 
         # sqlalchemy ver 2.0, need to use with statement, and text() function
@@ -76,12 +76,9 @@ class learning_project_function:
     # and in python, we use double quote
     # in js we we also use double quote
 
-    def new_chat(self, apikey, chat, character):
+    def new_chat(self, email, chat, character):
         now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        #print(now_time)
-        #print(apikey, character)
-        # chat_his = '"' + self.chat_history(apikey, character) + '"'
-        chat_his = self.chat_history(apikey, character).replace("'", '"')
+        chat_his = self.chat_history(email, character).replace("'", '"')
         chat_his_json = json.loads(chat_his)
         
         llm_output = generate_output(chat) # this part will take some time
@@ -91,7 +88,7 @@ class learning_project_function:
 
         sql_cmd = """
         insert into chathistory
-        """ + f"values('{now_time}', '{apikey}', '{chat_his}', '{character}');"
+        """ + f"values('{now_time}', '{email}', '{chat_his}', '{character}');"
         #print(sql_cmd)
         with self.db.engine.connect() as conn:
             conn.execute(text(sql_cmd))

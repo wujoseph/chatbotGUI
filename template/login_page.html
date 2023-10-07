@@ -23,14 +23,12 @@
             <div class="description">Login</div>
         </div>
         <div class="container">
-            <!--
-            <a href="{{ url_for('login_google') }}"><button class="button-35 google" role="button">
-            -->
-            <a><button class="button-35 google" role="button">
-                <span class="fa fa-google"></span>
-                Continue with Google
-            </button>
-        </a>
+            <a href="{{url_for('login_google')}}">
+                <button class="button-35 google" role="button">
+                    <span class="fa fa-google"></span>
+                    Continue with Google
+                </button>
+            </a>
         </div>
         <div class="container">
 			
@@ -42,26 +40,23 @@
     </div>
 </body>
 <script>
+    /*
 	document.querySelector('button.button-35.google').addEventListener('click', function(){
 		var form_data = new FormData();
-		form_data.append('email','mygmail@gmail.com');
-		form_data.append('key','mykey');
 		var xhr = new XMLHttpRequest();  
 		xhr.responseType = 'json';
-		xhr.open("post", "/google_api");
-		xhr.send(form_data);
+		xhr.open("get", "/login/google");
+		xhr.send();
 		xhr.onreadystatechange = function() { 
 			if (xhr.readyState == 4 && xhr.status == 200){
 				var json_data = xhr.response;
-				//console.log(json_data);
-				//console.log(json_data.login_result)
+				console.log(json_data);
 				if(json_data.login_result === "True"){
-					console.log("login success");
-					document.cookie = "apikey=mykey";
+					document.cookie = json_data.email;
 					window.location.href = '/character'
 				}
 			}
 		}
-	});
+	});*/
 </script>
 </html>

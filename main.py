@@ -77,16 +77,27 @@ def authorized():
 			request.args['error_reason'],
 			request.args['error_description']
 		)
-
 	session['access_token'] = response['access_token']
 	user_info = google.get('userinfo')
-	
-	# 將用戶的信息存儲到session
-	session['user_info'] = user_info.data
-	#print(user_info.data)
-	# return 'OK'
+	try:
+		email = user_info.data['email']
+		session['email'] = email
+	except KeyError:
+		print('keyerror:',user_info.data)
+		logging.warning('keyerror in google email')
+		return ""
+
+	# 如果不存在帳號，先註冊
+	# TO DO: insert new row in user table
+	if(not user_cookie_check(email)):
+		pass
+
 	# 如果認證成功，重定向到chat_page
-	return redirect(url_for('character'))
+
+	# return the email and write cookie in frontend
+	# then redirect by js
+	# maybe try callback
+	return redirect('/character')
 
 @google.tokengetter
 def get_google_oauth_token():
@@ -99,10 +110,11 @@ def guest_page():
 
 @app.route('/chat')
 def chat_page():
-	apikey = request.cookies.get('apikey')
-	character = request.args.get('character')
-	#print(f'chat_page apikey={apikey}, character={character}')
-	return render_template("chat_page.html",**locals())
+	email = session['email'] 
+	if(not user_cookie_check(email)):
+		return redirect('/notlogin')
+	else:
+		return render_template("chat_page.html",**locals())
 
 @app.route('/chat2')
 def chat_page2():
@@ -115,15 +127,14 @@ def chat_page2():
 #need to load all the chat history
 @app.route('/chat_history')
 def chat_history():
-	apikey = request.cookies.get('apikey')
+	email = session['email'] 
 	character = request.args.get('character')
-	# print(f'chat_page apikey={apikey}, character={character}')
 
 	# notice db store data in single quote, and js should use double quote
 	# so it should be transform here
 
 	try:
-		response = function.chat_history(apikey, character).replace("'",'"')
+		response = function.chat_history(email, character).replace("'",'"')
 	except AttributeError:# if there is no chat history, then replace function will cause this error
 		response = ""
 	return jsonify(response)
@@ -133,27 +144,24 @@ def chat_history():
 @app.route('/new_chat',methods =['POST'])
 def new_chat():
 	chat = request.form.get('chat')
-	apikey = request.cookies.get('apikey')	
+	email = session['email'] 
 	character = request.form.get('character')
 	#print(f'new_chat apikey={apikey}, character={character}, new_chat={new_chat}')
-	logging.info(f'new_chat apikey={apikey}, character={character}, new_chat={new_chat}')
-	function.new_chat(apikey, chat,character)
+	logging.info(f'new_chat email={email}, character={character}, new_chat={new_chat}')
+	function.new_chat(email, chat,character)
 	return "OK"
 
 @app.route('/character')
 def character_select_page():
-	apikey = request.cookies.get('apikey')
-	#print(f'character_page apikey={apikey}')
-	return render_template("character_select_page.html",**locals())
+	email = session['email'] 
+	if(not user_cookie_check(email)):
+		return redirect('/notlogin')
+	else:
+		return render_template("character_select_page.html",**locals())
 
 @app.route('/setting')
 def setting_page():
 	return render_template("setting_page.html",**locals())
-
-
-
-
-
 
 @app.route('/Project',methods =['POST'])
 def login_post():	
@@ -200,6 +208,21 @@ def audio():
 	#print(filename)
 	return send_file(filename)
 
+@app.route('/notlogin')
+def notlogin():
+	# TO DO: new html page
+	return render_template("notlogin.html",**locals())
+
+# check login status, if user had login, they should have cookie
+def user_cookie_check(email)->bool:
+	if((email is None) or email == ""):
+		return False
+	return function.check_google_email(email)
+
 if __name__ == "__main__":
-	app.run(host='140.119.19.27', port=80)
+	path1 = os.path.join(os.path.dirname(__file__) ,'../ssltest/personabot.site_key.txt')
+	path1 = os.path.abspath(path1)
+	path2 = os.path.join(os.path.dirname(__file__) ,'../ssltest/personabot.site.crt')
+	path2 = os.path.abspath(path2)
+	app.run(host='140.119.19.27', port=443,ssl_context=(path2,path1))
 
