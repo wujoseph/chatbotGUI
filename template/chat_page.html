@@ -242,8 +242,10 @@ function closeSetting() {
   var popup = document.querySelector('.popup-background');
   popup.style.display="none";
 }
-/*取得最新的對話紀錄
-只由update_history()呼叫
+/*
+生成音檔,
+只取最新的對話紀錄，
+此函數只由update_history()呼叫
 */
 function generate_audio(){
   var latestreply = document.querySelector('.messages').lastChild.firstChild.getAttribute('ref');

@@ -26,7 +26,7 @@ set width to 15%, control button width
 .description {
   text-align: center;
   width: 100%;
-  font-size: 3.5rem;
+  font-size: 10vh;
   color: #454545;
   font-family: Inter,sans-serif;
   font-weight: 700;
@@ -36,12 +36,10 @@ set width to 15%, control button width
 }
 
 .container {
-  width:auto;
+  width:60%;
   display:block;
-  padding-left:20%;
-  padding-right:20%;
+  margin:auto;
   flex-grow: 1;
-  display:flex
 }
 
 .button-35 {
@@ -55,7 +53,6 @@ cursor: pointer;
 display: inline-flex;
 flex: 1;
 font-family: Inter,sans-serif;
-font-size: 1.2rem;
 font-weight: 700;
 justify-content: center;
 line-height: 1;
@@ -72,7 +69,7 @@ user-select: none;
 touch-action: manipulation;
 width: 100%;
 height:50%;
-margin-top:1rem;
+margin-top:0.8rem;
 margin-bottom:1rem;
 font-family: sans-serif;
 }
@@ -85,21 +82,22 @@ font-family: sans-serif;
 
 }
 
-.facebook{
-background-color:#007bff;
-}
-
-.facebook:hover{
-background-color: #3B5998;
-}
 
 .google{
-background-color: #dd4b39;
+  font-size: 3vh;
+  background-color: #dd4b39;
 }
 
 .google:hover{
-background-color: #b12c3a;
+  background-color: #b12c3a;
 }
 .loginpage{
-background-color:#e9ecef;
+  background-color:#e9ecef;
+}
+
+.projectname{
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 4vh;
+  font-weight: 700;
+  text-align: center;
 }
