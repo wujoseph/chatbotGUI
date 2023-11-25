@@ -84,7 +84,7 @@ class learning_project_function:
         chat_his = chat_his.replace("'", '"')
         chat_his_json = json.loads(chat_his)
         
-        llm_output = generate_output(chat) # this part will take some time
+        llm_output = generate_output(chat,character) # this part will take some time
 
         chat_his_json.append([chat, llm_output])
         chat_his = json.dumps(chat_his_json, ensure_ascii=False)
