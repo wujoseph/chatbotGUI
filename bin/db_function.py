@@ -78,7 +78,10 @@ class learning_project_function:
 
     def new_chat(self, email, chat, character):
         now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        chat_his = self.chat_history(email, character).replace("'", '"')
+        chat_his = self.chat_history(email, character)
+        if(chat_his is None):# chat_his will be None when user start using it for first time
+            chat_his = "[]"
+        chat_his = chat_his.replace("'", '"')
         chat_his_json = json.loads(chat_his)
         
         llm_output = generate_output(chat) # this part will take some time
