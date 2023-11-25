@@ -170,12 +170,13 @@
   function addCommentAI(input){
     var newDiv = document.createElement('div');
     newDiv.className = 'mb-3';
-    var newInput = document.createElement('input');
+    var newInput = document.createElement('dev');
     newInput.type = 'text';
-    newInput.className = 'form-control';
+    newInput.className = 'message-div';
     newInput.placeholder = 'Disabled input';
     newInput.disabled = true;
-    newInput.value = input;
+    newInput.innerHTML = input;
+    
     //增加ref attribute, 使tts可以讀取文字
     newInput.setAttribute('ref',input);
     newDiv.appendChild(newInput);
@@ -248,7 +249,7 @@ function closeSetting() {
 此函數只由update_history()呼叫
 */
 function generate_audio(){
-  var latestreply = document.querySelector('.messages').lastChild.firstChild.getAttribute('ref');
+  var latestreply = document.querySelector('.messages').lastChild.firstChild.innerHTML;
   var form_data = new FormData();
   //console.log(latestreply);
   form_data.append('text',latestreply);

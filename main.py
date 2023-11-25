@@ -190,8 +190,8 @@ def google_api():
 @app.route('/generate_audio',methods =['POST'])
 def generate_audio():
 	text = request.form.get('text')
-	if(len(text) > 200):
-		text = text[0:200]#cap the text
+	if(len(text) > 100):
+		text = text[0:100]#cap the text
 	url = 'http://127.0.0.1:7860/run/predict/'
 	data = {"fn_index":0,"data":[text,"human","简体中文",1]}
 	x = requests.post(url, json = data)
