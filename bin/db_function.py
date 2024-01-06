@@ -4,10 +4,12 @@ from sqlalchemy import text
 import time
 import json
 from bin.temp_llm import generate_output
+from opencc import OpenCC
 
 class learning_project_function:
     def __init__(self,db):
         self.db = db
+        self.cc = OpenCC('s2t')
 
 
     def db_select_test(self):
@@ -86,6 +88,7 @@ class learning_project_function:
         
         llm_output = generate_output(chat,character) # this part will take some time
 
+        llm_output = self.cc.convert(llm_output)
         chat_his_json.append([chat, llm_output])
         chat_his = json.dumps(chat_his_json, ensure_ascii=False)
 

@@ -17,7 +17,7 @@ def generate_output(input, character):
     # and need to manullay change
 
     if(character == "troll"):
-        url = 'https://0dbb-34-141-219-194.ngrok-free.app/v1/chat/completions'
+        url = 'https://0f92-34-147-25-81.ngrok-free.app/v1/chat/completions'
 
         if(input[-1] != "?"):
             input = input + "?" # add questionmark at end of sentence, this can improve model performance
@@ -37,7 +37,7 @@ def generate_output(input, character):
         return sent
 
     if(character == "support"):
-        url = 'https://2152-34-147-122-223.ngrok-free.app/v1/chat/completions'
+        url = 'https://9b45-35-229-222-199.ngrok-free.app/v1/chat/completions'
 
         myobj = {"messages": [{"role": "user","content": "你是一個正向溫和的心理治療師，回答以下問題，並且不可以用英文，限二百字。" + input}], 
                 "repetition_penalty": 1.0,
